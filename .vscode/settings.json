@@ -1,0 +1,10 @@
+{
+  // Each package (web/, and later the backend) has its own eslint.config.js;
+  // "auto" makes the ESLint extension use the nearest one.
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "**/.DS_Store": true
+  }
+}
