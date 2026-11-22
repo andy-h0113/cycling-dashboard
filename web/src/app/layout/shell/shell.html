@@ -1,0 +1,12 @@
+<header class="shell-header">
+  <a class="brand" routerLink="/">Cycling Dashboard</a>
+  <nav aria-label="Primary">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/sign-in" routerLinkActive="active">Sign in</a>
+  </nav>
+</header>
+
+<main class="shell-main">
+  <router-outlet />
+</main>

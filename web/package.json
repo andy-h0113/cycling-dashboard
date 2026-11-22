@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "cycling-dashboard-web",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,10 +7,16 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "test:ci": "ng test --watch=false",
+    "lint": "ng lint",
+    "format": "prettier --write \"src/**/*.{ts,html,scss}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,scss}\""
   },
   "private": true,
   "packageManager": "npm@10.9.9",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0"
+  },
   "dependencies": {
     "@angular/common": "^22.3.0",
     "@angular/compiler": "^22.3.0",
