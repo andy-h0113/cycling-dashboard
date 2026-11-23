@@ -13,9 +13,9 @@
     "format:check": "prettier --check \"src/**/*.{ts,html,scss}\""
   },
   "private": true,
-  "packageManager": "npm@10.9.9",
+  "packageManager": "npm@11.20.0",
   "engines": {
-    "node": "^22.22.3 || ^24.15.0"
+    "node": "^26.0.0"
   },
   "dependencies": {
     "@angular/common": "^22.3.0",
