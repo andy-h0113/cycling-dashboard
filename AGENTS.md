@@ -31,7 +31,7 @@ Frontend details (directory ownership, routes, environments, startup):
 ## Check commands
 
 Run from `web/`. All must pass before opening a PR; CI runs the same set
-([.github/workflows/web-ci.yml](.github/workflows/web-ci.yml)).
+([.github/workflows/ci.yml](.github/workflows/ci.yml)).
 
 ```sh
 npm ci
@@ -40,6 +40,16 @@ npm run lint           # angular-eslint
 npm run test:ci        # vitest, single run
 npm run build          # production build
 ```
+
+### CI structure
+
+[`ci.yml`](.github/workflows/ci.yml) runs on every PR and on pushes to `main`. A `changes` job
+detects which areas changed, each area's job (currently `web`) runs only when its files changed,
+and the `ci-ok` gate job always runs. `ci-ok` is the **only required status check** on `main`, so
+the branch ruleset never needs editing when areas are added.
+
+To add an area (e.g. `api/` with the backend ticket): add a filter and output to `changes`, add a
+job with that area's own check commands, and add the job to `ci-ok`'s `needs`.
 
 ## Conventions
 
