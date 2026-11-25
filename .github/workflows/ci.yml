@@ -1,0 +1,68 @@
+name: CI
+
+# No top-level `paths` filter: the workflow runs on every PR so the `ci-ok` gate
+# always reports. Per-area jobs decide for themselves whether to run (see `changes`).
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read # paths-filter reads the PR's changed files
+
+jobs:
+  # Works out which areas of the repo changed. To add an area (e.g. api/), add a
+  # filter here, an output above it, a job below, and the job to `ci-ok.needs`.
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      web: ${{ steps.filter.outputs.web }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            web:
+              - 'web/**'
+              - '.nvmrc'
+              - '.github/workflows/ci.yml'
+
+  web:
+    needs: changes
+    if: needs.changes.outputs.web == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run test:ci
+      - run: npm run build
+
+  # The single required status check for `main`. Passes when every job above
+  # succeeded or was skipped; fails if any failed or was cancelled.
+  ci-ok:
+    if: always()
+    needs: [changes, web]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if any job failed or was cancelled
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1
+      - run: echo "All jobs passed or were skipped."
