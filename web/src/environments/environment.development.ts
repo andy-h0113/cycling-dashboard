@@ -8,9 +8,4 @@ import type { AppConfig } from '../app/core/config/app-config';
 export const environment: AppConfig = {
   name: 'local',
   apiBaseUrl: 'http://localhost:3000/api',
-  auth: {
-    authority: 'http://localhost:3000/mock-idp',
-    clientId: 'cycling-dashboard-web-local',
-    redirectPath: '/auth/callback',
-  },
 };

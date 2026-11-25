@@ -7,9 +7,4 @@ import type { AppConfig } from '../app/core/config/app-config';
 export const environment: AppConfig = {
   name: 'production',
   apiBaseUrl: '/api',
-  auth: {
-    authority: 'https://idp.example.invalid',
-    clientId: 'cycling-dashboard-web',
-    redirectPath: '/auth/callback',
-  },
 };

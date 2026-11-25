@@ -18,7 +18,7 @@ describe('App', () => {
     const nav = el.querySelector('nav[aria-label="Primary"]');
     expect(nav).toBeTruthy();
     const links = Array.from(nav?.querySelectorAll('a') ?? []).map((a) => a.textContent?.trim());
-    expect(links).toEqual(['Home', 'Dashboard', 'Sign in']);
+    expect(links).toEqual(['Home', 'Dashboard']);
     expect(el.querySelector('main router-outlet')).toBeTruthy();
   });
 });
